@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>18 anos — feito com carinho</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============ TOKENS ============ */
+  :root{
+    --black: #04060c;
+    --navy-deep: #070c18;
+    --navy: #0d1730;
+    --navy-soft: #14224a;
+    --blue: #2f5fdc;
+    --blue-bright: #6f97ff;
+    --blue-pale: #a9c0ff;
+    --ink: #eef2fb;
+    --muted: #8ea0c9;
+    --flame: #ffb15e;
+    --flame-core: #fff2cf;
+    --gold: #e7c98c;
+    --radius: 18px;
+    --serif: 'Playfair Display', serif;
+    --script: 'Cormorant Garamond', serif;
+    --sans: 'Inter', sans-serif;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ height:100%; }
+  body{
+    background: radial-gradient(ellipse at 50% -10%, var(--navy-soft), var(--navy-deep) 45%, var(--black) 100%);
+    color: var(--ink);
+    font-family: var(--sans);
+    overflow: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #stars{ position:fixed; inset:0; z-index:0; display:block; }
+
+  #app{
+    position:relative;
+    z-index:2;
+    height:100dvh;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 90px 20px 110px;
+  }
+
+  #stage{
+    width:100%;
+    max-width: 760px;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .page{
+    width:100%;
+    animation: rise .7s cubic-bezier(.2,.8,.2,1);
+  }
+  @keyframes rise{
+    from{ opacity:0; transform: translateY(18px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  /* ============ NAV ============ */
+  #topbar{
+    position:fixed; top:0; left:0; right:0; z-index:5;
+    display:flex; align-items:center; justify-content:center;
+    padding: 22px 20px 10px;
+    text-align:center;
+    pointer-events:none;
+  }
+  #topbar .eyebrow{
+    font-family: var(--script);
+    font-style:italic;
+    letter-spacing:.04em;
+    color: var(--blue-pale);
+    font-size: 15px;
+  }
+
+  #navbar{
+    position:fixed; bottom:0; left:0; right:0; z-index:5;
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    padding: 14px 16px 20px;
+    background: linear-gradient(to top, rgba(4,6,12,.9), transparent);
+  }
+  .progress-track{
+    width:min(420px, 90vw); height:3px; border-radius:3px;
+    background: rgba(255,255,255,.08); overflow:hidden;
+  }
+  .progress-fill{
+    height:100%; background: linear-gradient(90deg, var(--blue), var(--blue-bright));
+    transition: width .5s ease;
+  }
+  #navcontrols{ display:flex; align-items:center; gap:22px; }
+  .nav-btn{
+    width:44px; height:44px; border-radius:50%;
+    border:1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.03);
+    color: var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:18px;
+    transition: background .2s, transform .15s, border-color .2s;
+  }
+  .nav-btn:hover{ background: rgba(111,151,255,.15); border-color: var(--blue-bright); }
+  .nav-btn:active{ transform: scale(.92); }
+  .nav-btn:disabled{ opacity:.25; cursor:default; }
+  .nav-btn:focus-visible, button:focus-visible, [tabindex]:focus-visible{
+    outline: 2px solid var(--blue-bright); outline-offset: 3px;
+  }
+  #counter{ font-size:13px; color: var(--muted); letter-spacing:.06em; min-width:64px; text-align:center; font-variant-numeric: tabular-nums;}
+
+  /* ============ COVER PAGE ============ */
+  .cover{ text-align:center; }
+  .cover .eyebrow-line{
+    font-family: var(--script); font-style:italic; color:var(--blue-pale);
+    font-size:17px; margin-bottom:10px;
+  }
+  .cover h1{
+    font-family: var(--serif);
+    font-size: clamp(32px, 6vw, 52px);
+    line-height:1.08;
+    background: linear-gradient(180deg, #ffffff, var(--blue-pale));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    margin-bottom: 18px;
+  }
+  .cover-photo{
+    width: 168px; height:168px; border-radius:50%;
+    margin: 0 auto 22px;
+    border: 3px solid var(--blue);
+    box-shadow: 0 0 0 8px rgba(47,95,220,.12), 0 20px 50px rgba(0,0,0,.5);
+    overflow:hidden;
+    background: linear-gradient(140deg, var(--navy-soft), var(--navy));
+    display:flex; align-items:center; justify-content:center;
+    color: var(--muted); font-size:12px; padding:10px; text-align:center;
+  }
+  .cover-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  .cover p.msg{
+    font-family: var(--script); font-size: 21px; line-height:1.6;
+    color: var(--ink); max-width:520px; margin: 0 auto 30px;
+  }
+
+  /* Cake */
+  .cake-wrap{ margin: 6px auto 4px; display:flex; flex-direction:column; align-items:center; }
+  .candles{ display:flex; gap:14px; margin-bottom:-6px; z-index:2; }
+  .candle{ width:8px; height:34px; border-radius:3px; background: linear-gradient(180deg, var(--gold), #b98f4a); position:relative; cursor:pointer; }
+  .candle .flame{
+    position:absolute; left:50%; top:-16px; transform:translateX(-50%);
+    width:11px; height:16px; border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: radial-gradient(circle at 50% 70%, var(--flame-core), var(--flame) 60%, transparent 80%);
+    animation: flicker 1.4s ease-in-out infinite;
+    filter: drop-shadow(0 0 6px var(--flame));
+  }
+  @keyframes flicker{
+    0%,100%{ transform:translateX(-50%) scale(1) rotate(-2deg); }
+    50%{ transform:translateX(-50%) scale(.9,1.08) rotate(3deg); }
+  }
+  .candle.out .flame{ display:none; }
+  .candle.out::after{
+    content:''; position:absolute; left:50%; top:-14px; transform:translateX(-50%);
+    width:4px; height:14px; border-radius:2px; background: rgba(180,190,210,.4);
+    animation: smoke 1s ease-out forwards;
+  }
+  @keyframes smoke{
+    0%{ opacity:.7; transform: translateX(-50%) translateY(0) scaleX(1); }
+    100%{ opacity:0; transform: translateX(-50%) translateY(-26px) scaleX(2.2); }
+  }
+  .cake{
+    width: 230px; height:90px; border-radius: 14px 14px 30px 30px;
+    background: linear-gradient(180deg, var(--navy-soft), var(--navy));
+    border: 1px solid rgba(111,151,255,.25);
+    position:relative; box-shadow: 0 18px 40px rgba(0,0,0,.5);
+  }
+  .cake::before{
+    content:''; position:absolute; top:-8px; left:6px; right:6px; height:16px;
+    border-radius: 10px; background: linear-gradient(180deg, var(--blue-bright), var(--blue));
+  }
+  .blow-hint{ font-size:13px; color: var(--muted); margin-top:20px; }
+  #micBtn{
+    margin-top:10px; padding:9px 18px; border-radius:30px; border:1px solid rgba(111,151,255,.35);
+    background: rgba(111,151,255,.08); color: var(--blue-pale); font-family: var(--sans); font-size:13px;
+    cursor:pointer; transition: background .2s;
+  }
+  #micBtn:hover{ background: rgba(111,151,255,.18); }
+  .celebrate-msg{
+    margin-top: 22px; font-family: var(--serif); font-size: 20px; color: var(--gold);
+    opacity:0; transform: translateY(8px); transition: opacity .6s, transform .6s;
+  }
+  .celebrate-msg.show{ opacity:1; transform: translateY(0); }
+
+  /* ============ CARTA (FLIP CARD) ============ */
+  .carta-page{ display:flex; flex-direction:column; align-items:center; }
+  .carta-label{
+    font-family: var(--script); font-style:italic; color: var(--blue-pale);
+    font-size:16px; margin-bottom: 22px; letter-spacing:.03em;
+  }
+  .card{
+    width: min(380px, 88vw); height: 460px;
+    perspective: 1400px; cursor:pointer;
+  }
+  .card-inner{
+    position:relative; width:100%; height:100%;
+    transition: transform .8s cubic-bezier(.2,.8,.2,1);
+    transform-style: preserve-3d;
+  }
+  .card.open .card-inner{ transform: rotateY(180deg); }
+  .card-face{
+    position:absolute; inset:0; backface-visibility:hidden;
+    border-radius: var(--radius);
+    border: 1px solid rgba(111,151,255,.22);
+    box-shadow: 0 20px 60px rgba(0,0,0,.55);
+    padding: 28px;
+    display:flex; flex-direction:column;
+    overflow:hidden;
+  }
+  .card-front{
+    padding:0;
+    overflow:hidden;
+    align-items:stretch; justify-content:flex-end; text-align:center;
+  }
+  .card-front-photo{
+    position:absolute; inset:0;
+    background: linear-gradient(140deg, var(--navy-soft), var(--navy));
+  }
+  .card-front-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .card-front-photo.sem-foto{
+    display:flex; align-items:center; justify-content:center;
+    color: var(--muted); font-size:12px; padding:10px; text-align:center;
+  }
+  .card-front-overlay{
+    position:relative; z-index:2;
+    padding: 26px 24px 24px;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    background: linear-gradient(to top, rgba(4,6,12,.92) 20%, rgba(4,6,12,.55) 60%, transparent 100%);
+  }
+  .card-front .ano{ font-family: var(--serif); font-size: 26px; color: var(--ink); }
+  .card-front .toque{ font-size:12.5px; color: var(--muted); letter-spacing:.08em; text-transform:uppercase; }
+  .card-front .de{ font-family: var(--script); font-style:italic; font-size:17px; color: var(--blue-pale); }
+
+  .card-back{
+    background: linear-gradient(165deg, #101c3a, #070c18);
+    transform: rotateY(180deg);
+    padding:0;
+  }
+  .card-back-inner{
+    width:100%; height:100%;
+    padding: 28px;
+    overflow-y:auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    display:flex; flex-direction:column; align-items:stretch;
+    gap: 14px;
+  }
+  .card-back .texto{
+    font-family: var(--script); font-size:18px; line-height:1.55; color: var(--ink);
+    white-space:pre-line; flex:none;
+  }
+  .card-back .assinatura{
+    font-family: var(--serif); font-size:16px; color: var(--blue-pale); text-align:right; padding-top:6px;
+  }
+  .card-back .fechar{
+    align-self:center; font-size:11.5px; color: var(--muted); letter-spacing:.08em; text-transform:uppercase;
+    margin-top:4px;
+  }
+
+  /* scrollbar discreta dentro da carta */
+  .card-back-inner::-webkit-scrollbar{ width:5px; }
+  .card-back-inner::-webkit-scrollbar-thumb{ background: rgba(111,151,255,.3); border-radius:4px; }
+
+  @media (max-width: 480px){
+    .card{ height: 74vh; }
+    .cover-photo{ width:130px; height:130px; }
+    .cover h1{ font-size: 30px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: .001s !important; transition-duration: .001s !important; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div id="topbar"><span class="eyebrow">para você, hoje e sempre</span></div>
+
+<div id="app">
+  <div id="stage"></div>
+</div>
+
+<div id="navbar">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div id="navcontrols">
+    <button class="nav-btn" id="prevBtn" aria-label="Página anterior">‹</button>
+    <span id="counter">1 / 18</span>
+    <button class="nav-btn" id="nextBtn" aria-label="Próxima página">›</button>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   👋 EDITE SÓ AQUI EMBAIXO PARA PERSONALIZAR O SITE
+   - Troque os nomes, textos e caminhos das fotos.
+   - As fotos ficam na pasta /fotos ao lado deste arquivo index.html.
+     Ex: fotos/capa.jpg, fotos/ano1.jpg, fotos/ano2.jpg ...
+   - Se uma foto não existir, aparece um quadro de espaço reservado —
+     o site não quebra.
+   ========================================================================= */
+
+const dados = {
+  capa: {
+    nome: "Sasa!!!",
+    foto: "fotos/sasa.jpeg",
+    mensagem: "Sasa, uma pessoa maravilhosa, de coração bom, as vezes brava kkkkk, mas incrível, uma ótima pessoa, amiga e filha. Nossa palmeirense roxaaaa, te amamos muito. Que vc se sinta sempre amada e Que sua nova fase seja linda igual o seu coração ♥️"
+  },
+  // Uma carta para cada ano de vida dela: Ano 1 até Ano 17.
+  // A página 18 (hoje) é a capa acima — 18 páginas ao todo.
+  cartas: [
+    { de: "Sua Mãe", foto: "fotos/mamae.jpeg",  texto: `Minha filha cada dia que passa vc me enche de orgulho o maior presente que a vida mim deu tem  o seu sorriso sua felicidade e a minha.metade de mim e você e a outra também te amo feliz aniversário` },
+    { de: "Seu Pai", foto: "fotos/papis.jpeg",  texto: `Feliz aniversário, minha filha! Parece que foi ontem que segurei você nos braços pela primeira vez. Hoje, meu coração se enche de orgulho ao ver a mulher incrível que você se tornou. Que a vida continue te presenteando com muita saúde, amor e realizações. Estarei sempre aqui para segurar sua mão. Eu te amo infinitamente!"` },
+    { de: "Seu Irmão", foto: "fotos/mano.jpeg",  texto: `Sabrina, te desejo tudo de melhor, que se inicie uma fase muito especial e próspera, seus dezoito anos chegaram. Que Deus te abençoe grandemente e te dê muita saúde, paz e diversas conquistas, conte comigo sempre. Feliz aniversáriooo` },
+    { de: "AnnaLu", foto: "fotos/annalu.jpeg",  texto: `Minha Sasa, como falar de vc, acho que não tenho palavras suficientes para explicar oq vc é na minha vida, muito mais que apenas uma prima, uma irmã eu diria. 
+Não só em momentos bons, mas na angústia, tristeza, leveza e até nos momentos felizes mesmo distantes estamos juntas e quando estamos juntas é melhor ainda, vc faz qualquer um se sentir especial apenas sendo vc até mesmo nos pequenos detalhes da vida. 
+Obrigada por ser tão assim como vc é, acho engraçado como vc torce pra mim ficar com uma pessoa específica 🙄🙄, mesmo sabendo que nunca vai dar certo, obrigada por deixar e compartilhar todos os momentos comigo. 
+Que os seus 18 anos sejam cercado de coisas boas e momentos com pessoas que te fazem bem, que no momento de dúvidas vc saiba para onde ir. Eu te amo Sasa!! E estarei aqui sempre para tudo que você precisar.` },
+    { de: "Guga", foto: "fotos/guga.jpeg",  texto: `Hoje é um dia muito especial para minha prima do coração, Sabrina eu sei que a gente briga e eu não dou muita atenção a você, mais fique sabendo que vc estará sempre no meu coração, amo muito você por que quando você vem aqui, a gente resenha bastante, queria dar um feliz aniversário pra você, que Deus abençoe você e todos q estão ao seu lado, muita saúde e paz pra vc e a todos nois, AMO VOCÊ 🫶🏻`},
+    { de: "Theozinho", foto: "fotos/theo.jpeg",  texto: `
+Parabéns, prima! Eu gosto muito de você. Espero que seu dia seja muito feliz e cheio de presentes, bolo e alegria. Que Deus cuide de você sempre. Te amo! 
+` },
+    { de: "Sua Best Master Pietra", foto: "fotos/pipis.jpeg",  texto: `Sasa, meu minha amg, minha companheira, minna topa tudo, minha irmã de outra mãe que a vida me deu 
+Eu sou grata por sua vida, por ter te conhecido e por tudo, nossos momentos, nossas risadas, saídas, fugas das aulas kkkkk (só achando uma desculpa para passear) obrigada por TUDO eu te amo absurdamente 
+Espero que seu novo ano seja repleto de muita alegria, paz, saúde e coisas maravilhosas, que essa nova fase seja incrível e inesquecível com muita diversão e aprendizado 
+Que Deus te abençoe hoje e sempre, que ele realize todos os seus sonhos e se faça presente em todos os momentos da sua vida, conta cmg pra tudo sempre!! 
+Eu tô aqui para e por você, espero que você conquiste tudo aquilo que sonha e saiba que sua amizade é muito importante para mim, sua alegria sempre sera a minha e eu sou mto feliz pela sua existência
+EU TE AMOOOOOOOO MUITOOOOO 
+E amo lembrar nossos momentos, a gente andando no shopping, indo ao cinema, chorando juntas vendo filmes, cantando juntas, vendo muitas séries e filmes, nossas risadas e TUDO 
+Felicidades hoje e sempre viu que você conheça o melhor do mundo e vivência as melhores coisas pq vc merece e muito, não tenho palavras pra dizer o tanto que sou grata por ter vc e por vc ser uma pessoa e amiga tão incrível 
+Termino aqui mais uma vez agradecendo por vc ter cruzado meu caminho 
+EU TE AMO, feliz 18 minha palmeirense e minha evie apaixonada por azul!!  💙🥳` },
+    { de: "Ferreira", foto: "fotos/ferreira.jpeg",  texto: `Essa daqui é a minha amiga Sabrina, uma menina que acaba de se tornar uma mulher. Mas desde sempre sua cabeça, seu jeito e conselhos já pareciam de uma adulta. Apesar de ela ter entrado no 8 ano na nossa escola, ela parecia me conhecer de muito tempo antes, nossas brincadeiras e risadas, até mesmo discussões sobre futebol eu jamais vou esquecer kkkk. Sou muito grato pelas amigas que tenho, e ela tem sido muito importante pra mim me ajudando em muitos processos. Venho por esta mensagem dar os parabéns pra vc Saa, e que Deus continue te abençoando muito e venham muitos mais anos de vida, que não falte saúde, paz, amor, e essa alegria e sorriso que vc tem nunca deixe seu rosto e nunca falte na sua vida. Essa nova fase não é fácil, mas lembre-se que vc tem amigos e amigas que vc pode contar pra TUDO. FELIZ 18 ANOS AMIGAAAA 🎂🥳🫶🏼` },
+    { de: "Duds", foto: "fotos/duds.jpeg",  texto: `Oii sa, to fazendo esse texto aqui pra te desejar um feliz aniversário amiga, muito obrigado pela a sua amizade, gosto muito da sua amizade e vc é uma pessoa muito importante pra mim. Que papai do céu cuide bem de vc, que ele de muita saúde, bênçãos, e que ele possa realizar todos os seus sonhos amiga, aproveita seu dia, qualquer coisa estou aqui ❤️` },
+    { de: "Henry", foto: "fotos/henry.jpeg", texto: `Feliz aniversário, Sabrina! 🥳🎉
+
+Hoje é um dia muito especial, e eu quero te desejar tudo de melhor que a vida pode oferecer. Que Deus continue iluminando o seu caminho, te dando muita saúde, felicidade, paz, amor e força para conquistar todos os seus objetivos.
+Obrigado por ser essa amiga tão especial, engraçada e divertida. Espero que você aproveite muito o seu dia, comemore bastante e saiba que merece todas as coisas boas que estão por vir. Parabéns por mais um ano de vida! Que seus sonhos se realizem e que nunca faltem motivos para sorrir.
+
+Feliz aniversário! Aproveite muito o seu dia! 🎂🎈❤️` },
+    { de: "Caio", foto: "fotos/caioo.jpeg", texto: `finalmente 18tou, vamo que vamooooooo
+saiba que sua amizade é mto importante para mim e saiba que  desejo tudo do bom e do melhor para vc, vc é uma amiga de vdd que ta sempre a disposição, rimos juntos, ja julgamos juntos, zuamos juntos, xingamos juntos, jogamos juntos fazemos mtas coisas juntos
+Msm a amizade sendo "recente" saiba que é mto importante igual vc, que nossa amizade seja incrivelmente fodastica e que dure mts anos, tmjjj e vamo q vamo amggg ta no coração do amigo🫶🏽🫶🏽` },
+    { de: "Gigis", foto: "fotos/gigis.jpeg", texto: `Sasa,
+Queria te lembrar do quanto vc é especial, e q sou muito grata por, além de ter conhecido o João, ter tido a oportunidade de conhecer você também. O que começou por causa dele acabou se tornando uma amizade que eu levo com muito carinho e que ganhou um espaço muito importante na minha vida.
+Obrigada por ser essa pessoa tão leve, divertida, acolhedora. Sua amizade se tornou muito especial para mim, e eu espero que ela continue crescendo por muitos anos.
+Nunca perca a sua essência, esse jeitinho único que você tem de iluminar os lugares por onde passa e de conquistar as pessoas sendo exatamente quem você é. Que Deus continue abençoando a sua vida, guiando cada passo seu e realizando todos os sonhos que existem no seu coração.
+Desejo que esse novo ciclo seja repleto de saúde, felicidade, amor, conquistas e muitas outras coisas boas! Vc merece tudo de mais lindo que a vida pode oferecer.
+e por fim, Feliz aniversário diva, q seu dia seja tão incrível quanto vc. Eu te amo e estarei sempre torcendo pela sua felicidade, e aq tbm para quando precisar! 💗` },
+    { de: "Prof Caio", foto: "fotos/profcaio.jpeg", texto: `Parabéns Sabrinaaaaa
+
+Te desejo que este novo ciclo seja repleto de saúde, conquistas e muitas oportunidades. Continue sendo essa pessoa esforçada, talentosa e gente boa, porque essas qualidades fazem toda a diferença e certamente vão abrir muitas portas na sua vida.
+
+É muito bacana ver sua dedicação e evolução no Senai. Tenho certeza de que você ainda vai conquistar coisas incríveis, tanto na vida pessoal quanto na profissional.
+
+Feliz aniversário! Que Deus abençoe sua caminhada e que seus sonhos se transformem em grandes realizações. 
+
+Forte abraço!
+Prof Caio` },
+    { de: "Prof Dani", foto: "fotos/profpeti.jpeg", texto: `senhorita Sasa, quero desejar um feliz aniversário, que Deus abençoe muito sua vida e seus caminhos. Continue sendo essa pessoa dedicada cheia de potencial e que nunca duvide da sua capacidade de crescer ainda mais. Que este novo ciclo seja cheio de saúde, alegria, conquistas, momentos especiais e muiiiiita atividade (brincadeirinhaaaaa)...
+É uma honra tê-la como aluna`},
+    { de: "Leleo", foto: "fotos/leo.jpeg", texto: `Oi pequena princesa, quero te desejar um feliz aniversário, espero que desse dia em diante Deus te abençoe cada vez mais, desejo tmb tudo de bom e do melhor pra vc, vc estará sempre no meu coração, gosto muito de vc, vc é uma pessoa incrível, quero te ver sempre bem, estarei sempre com vc pequena, obg por confiar em mim sempre, obg por me considerar alguém digno da sua confiança, essa mensagem n é muito grande mas é do fundo do meu coração, parabéns pequena princesa, tenha um ótimo dia ❤️` },
+    { de: "Tia Taty", foto: "fotos/titiataty.jpeg", texto: `Sabrina, que seu aniversário tenha sido especial ( com a simples surpresa que fizemos a você). Parabéns, muitas felicidades, que Jesus esteja com vc nesse novo ciclo e que vc possa viver o melhor Dele no seu novo ano. 🥳🥳🥳🥳 Amamos vc. ❤️❤️❤️`},
+    { de: "Nome de quem escreve", foto: "fotos/padrinhos.jpeg", texto: `Oi Sa passando aqui pra te desejar um feliz aniversário,que seja cheio de saúde, paz, sucesso e muito amor 
+Que nosso grandioso Deus te cubra com muita luz e benção. Feliz vida nós te amamos 😘😘😘`}
+  ]
+};
+
+/* ========================= NÃO PRECISA MEXER DAQUI PRA BAIXO ========================= */
+
+const totalPages = 1 + dados.cartas.length; // capa + cartas
+let current = 0;
+const stage = document.getElementById('stage');
+const counterEl = document.getElementById('counter');
+const progressFill = document.getElementById('progressFill');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+function fotoTag(src, alt){
+  return `<img src="${src}" alt="${alt}" onerror="this.parentElement.classList.add('sem-foto'); this.remove(); this.parentElement.insertAdjacentHTML('beforeend','<span>📷 foto de ${alt}</span>')">`;
+}
+
+function renderCover(){
+  const c = dados.capa;
+  return `
+  <div class="page cover">
+    <div class="eyebrow-line">18 páginas, uma para cada ano da sua vida</div>
+    <h1>Feliz 18 anos, ${c.nome}</h1>
+    <div class="cover-photo">${fotoTag(c.foto, c.nome)}</div>
+    <p class="msg">${c.mensagem}</p>
+
+    <div class="cake-wrap">
+      <div class="candles" id="candles"></div>
+      <div class="cake"></div>
+      <div class="blow-hint">Assopre as velinhas — ou toque em cada uma delas</div>
+      <button id="micBtn" type="button">🎤 Assoprar pelo microfone</button>
+      <div class="celebrate-msg" id="celebrateMsg">🎉 Parabéns! Que esse novo ano seja lindo do seu jeito. 🎉</div>
+    </div>
+  </div>`;
+}
+
+function renderCarta(i){
+  const carta = dados.cartas[i];
+  return `
+  <div class="page carta-page">
+    <div class="carta-label">Ano ${i+1} de 17</div>
+    <div class="card" id="card-${i}">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-front-photo">${fotoTag(carta.foto, 'ano ' + (i+1))}</div>
+          <div class="card-front-overlay">
+            <div class="ano">Ano ${i+1}</div>
+            <div class="de">uma carta de ${carta.de}</div>
+            <div class="toque">toque para abrir</div>
+          </div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-back-inner">
+            <div class="texto">${carta.texto}</div>
+            <div class="assinatura">— ${carta.de}</div>
+            <div class="fechar">toque para fechar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function render(){
+  if(current === 0){
+    stage.innerHTML = renderCover();
+    setupCake();
+  } else {
+    const i = current - 1;
+    stage.innerHTML = renderCarta(i);
+    const card = document.getElementById('card-' + i);
+    card.addEventListener('click', () => card.classList.toggle('open'));
+  }
+  counterEl.textContent = `${current+1} / ${totalPages}`;
+  progressFill.style.width = `${((current+1)/totalPages)*100}%`;
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === totalPages - 1;
+}
+
+function go(delta){
+  const next = current + delta;
+  if(next < 0 || next > totalPages - 1) return;
+  current = next;
+  render();
+}
+
+prevBtn.addEventListener('click', () => go(-1));
+nextBtn.addEventListener('click', () => go(1));
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'ArrowRight') go(1);
+  if(e.key === 'ArrowLeft') go(-1);
+});
+
+// swipe simples pra celular
+let touchX = null;
+document.addEventListener('touchstart', e => touchX = e.touches[0].clientX, {passive:true});
+document.addEventListener('touchend', e => {
+  if(touchX === null) return;
+  const diff = e.changedTouches[0].clientX - touchX;
+  if(Math.abs(diff) > 50) go(diff < 0 ? 1 : -1);
+  touchX = null;
+});
+
+/* ---------- Velinhas ---------- */
+function setupCake(){
+  const wrap = document.getElementById('candles');
+  const total = 5;
+  wrap.innerHTML = '';
+  for(let i=0;i<total;i++){
+    const c = document.createElement('div');
+    c.className = 'candle';
+    c.innerHTML = '<span class="flame"></span>';
+    c.addEventListener('click', () => blowOne(c));
+    wrap.appendChild(c);
+  }
+  document.getElementById('micBtn').addEventListener('click', tryMic);
+}
+
+function blowOne(candleEl){
+  if(candleEl.classList.contains('out')) return;
+  candleEl.classList.add('out');
+  checkAllOut();
+}
+
+function checkAllOut(){
+  const lit = document.querySelectorAll('.candle:not(.out)');
+  if(lit.length === 0){
+    const msg = document.getElementById('celebrateMsg');
+    if(msg) msg.classList.add('show');
+    confetti();
+  }
+}
+
+let micActive = false;
+async function tryMic(){
+  if(micActive) return;
+  const btn = document.getElementById('micBtn');
+  try{
+    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+    micActive = true;
+    btn.textContent = '🎤 Ouvindo... pode assoprar!';
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const source = ctx.createMediaStreamSource(stream);
+    const analyser = ctx.createAnalyser();
+    analyser.fftSize = 512;
+    source.connect(analyser);
+    const data = new Uint8Array(analyser.frequencyBinCount);
+    let cooldown = false;
+
+    function loop(){
+      const litCandles = document.querySelectorAll('.candle:not(.out)');
+      if(litCandles.length === 0){
+        stream.getTracks().forEach(t => t.stop());
+        ctx.close();
+        btn.style.display = 'none';
+        return;
+      }
+      analyser.getByteFrequencyData(data);
+      const avg = data.reduce((a,b)=>a+b,0) / data.length;
+      if(avg > 32 && !cooldown){
+        cooldown = true;
+        blowOne(litCandles[0]);
+        setTimeout(() => cooldown = false, 500);
+      }
+      requestAnimationFrame(loop);
+    }
+    loop();
+  }catch(err){
+    btn.textContent = '🎤 Sem acesso ao microfone — toque nas velinhas';
+  }
+}
+
+/* ---------- Confete simples ---------- */
+function confetti(){
+  const colors = ['#6f97ff','#2f5fdc','#e7c98c','#eef2fb'];
+  for(let i=0;i<60;i++){
+    const p = document.createElement('div');
+    const size = 5 + Math.random()*5;
+    p.style.cssText = `
+      position:fixed; z-index:20; top:-10px; left:${Math.random()*100}vw;
+      width:${size}px; height:${size*0.6}px; background:${colors[i % colors.length]};
+      opacity:.9; border-radius:2px; pointer-events:none;
+      transform: rotate(${Math.random()*360}deg);
+    `;
+    document.body.appendChild(p);
+    const fall = p.animate([
+      { transform: `translateY(0) rotate(0deg)`, opacity: 1 },
+      { transform: `translateY(${70+Math.random()*30}vh) rotate(${360+Math.random()*360}deg)`, opacity: 0 }
+    ], { duration: 2200 + Math.random()*1200, easing: 'ease-in' });
+    fall.onfinish = () => p.remove();
+  }
+}
+
+/* ---------- Céu estrelado de fundo ---------- */
+const canvas = document.getElementById('stars');
+const ctx2d = canvas.getContext('2d');
+let stars = [];
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function resizeCanvas(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const count = Math.floor((canvas.width * canvas.height) / 9000);
+  stars = Array.from({length: count}, () => ({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*1.3 + .3,
+    phase: Math.random()*Math.PI*2,
+    speed: 0.01 + Math.random()*0.02
+  }));
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+function drawStars(t){
+  ctx2d.clearRect(0,0,canvas.width,canvas.height);
+  for(const s of stars){
+    const tw = reduceMotion ? 0.7 : 0.5 + 0.5*Math.sin(t*s.speed + s.phase);
+    ctx2d.beginPath();
+    ctx2d.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    ctx2d.fillStyle = `rgba(180,200,255,${0.15 + tw*0.55})`;
+    ctx2d.fill();
+  }
+  if(!reduceMotion) requestAnimationFrame(drawStars);
+}
+requestAnimationFrame(drawStars);
+
+render();
+</script>
+</body>
+</html>
