@@ -29,33 +29,37 @@
   }
 
   *{ box-sizing:border-box; margin:0; padding:0; }
-  html,body{ height:100%; }
+  
+  html, body {
+    min-height: 100dvh;
+  }
+
   body{
     background: radial-gradient(ellipse at 50% -10%, var(--navy-soft), var(--navy-deep) 45%, var(--black) 100%);
     color: var(--ink);
     font-family: var(--sans);
-    overflow: hidden;
     position: relative;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
-  #stars{ position:fixed; inset:0; z-index:0; display:block; }
+  #stars{ position:fixed; inset:0; z-index:0; display:block; pointer-events:none; }
 
   #app{
     position:relative;
     z-index:2;
-    height:100dvh;
+    min-height: 100dvh;
     width:100%;
     display:flex;
     align-items:center;
     justify-content:center;
-    padding: 90px 20px 110px;
+    padding: 70px 16px 90px;
   }
 
   #stage{
     width:100%;
     max-width: 760px;
-    height:100%;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -74,9 +78,10 @@
   #topbar{
     position:fixed; top:0; left:0; right:0; z-index:5;
     display:flex; align-items:center; justify-content:center;
-    padding: 22px 20px 10px;
+    padding: 12px 16px;
     text-align:center;
     pointer-events:none;
+    background: linear-gradient(to bottom, rgba(4,6,12,.95), transparent);
   }
   #topbar .eyebrow{
     font-family: var(--script);
@@ -88,9 +93,9 @@
 
   #navbar{
     position:fixed; bottom:0; left:0; right:0; z-index:5;
-    display:flex; flex-direction:column; align-items:center; gap:10px;
-    padding: 14px 16px 20px;
-    background: linear-gradient(to top, rgba(4,6,12,.9), transparent);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    padding: 10px 16px 14px;
+    background: linear-gradient(to top, rgba(4,6,12,.95), transparent);
   }
   .progress-track{
     width:min(420px, 90vw); height:3px; border-radius:3px;
@@ -102,7 +107,7 @@
   }
   #navcontrols{ display:flex; align-items:center; gap:22px; }
   .nav-btn{
-    width:44px; height:44px; border-radius:50%;
+    width:42px; height:42px; border-radius:50%;
     border:1px solid rgba(255,255,255,.14);
     background: rgba(255,255,255,.03);
     color: var(--ink);
@@ -122,21 +127,21 @@
   .cover{ text-align:center; }
   .cover .eyebrow-line{
     font-family: var(--script); font-style:italic; color:var(--blue-pale);
-    font-size:17px; margin-bottom:10px;
+    font-size:16px; margin-bottom:8px;
   }
   .cover h1{
     font-family: var(--serif);
-    font-size: clamp(32px, 6vw, 52px);
-    line-height:1.08;
+    font-size: clamp(28px, 5vw, 48px);
+    line-height:1.1;
     background: linear-gradient(180deg, #ffffff, var(--blue-pale));
     -webkit-background-clip:text; background-clip:text; color:transparent;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
   .cover-photo{
-    width: 168px; height:168px; border-radius:50%;
-    margin: 0 auto 22px;
+    width: 140px; height:140px; border-radius:50%;
+    margin: 0 auto 18px;
     border: 3px solid var(--blue);
-    box-shadow: 0 0 0 8px rgba(47,95,220,.12), 0 20px 50px rgba(0,0,0,.5);
+    box-shadow: 0 0 0 6px rgba(47,95,220,.12), 0 15px 35px rgba(0,0,0,.5);
     overflow:hidden;
     background: linear-gradient(140deg, var(--navy-soft), var(--navy));
     display:flex; align-items:center; justify-content:center;
@@ -145,14 +150,14 @@
   .cover-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
 
   .cover p.msg{
-    font-family: var(--script); font-size: 21px; line-height:1.6;
-    color: var(--ink); max-width:520px; margin: 0 auto 30px;
+    font-family: var(--script); font-size: 19px; line-height:1.5;
+    color: var(--ink); max-width:520px; margin: 0 auto 20px;
   }
 
   /* Cake */
   .cake-wrap{ margin: 6px auto 4px; display:flex; flex-direction:column; align-items:center; }
   .candles{ display:flex; gap:14px; margin-bottom:-6px; z-index:2; }
-  .candle{ width:8px; height:34px; border-radius:3px; background: linear-gradient(180deg, var(--gold), #b98f4a); position:relative; cursor:pointer; }
+  .candle{ width:8px; height:30px; border-radius:3px; background: linear-gradient(180deg, var(--gold), #b98f4a); position:relative; cursor:pointer; }
   .candle .flame{
     position:absolute; left:50%; top:-16px; transform:translateX(-50%);
     width:11px; height:16px; border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
@@ -175,24 +180,24 @@
     100%{ opacity:0; transform: translateX(-50%) translateY(-26px) scaleX(2.2); }
   }
   .cake{
-    width: 230px; height:90px; border-radius: 14px 14px 30px 30px;
+    width: 200px; height:75px; border-radius: 14px 14px 24px 24px;
     background: linear-gradient(180deg, var(--navy-soft), var(--navy));
     border: 1px solid rgba(111,151,255,.25);
-    position:relative; box-shadow: 0 18px 40px rgba(0,0,0,.5);
+    position:relative; box-shadow: 0 14px 30px rgba(0,0,0,.5);
   }
   .cake::before{
-    content:''; position:absolute; top:-8px; left:6px; right:6px; height:16px;
+    content:''; position:absolute; top:-8px; left:6px; right:6px; height:14px;
     border-radius: 10px; background: linear-gradient(180deg, var(--blue-bright), var(--blue));
   }
-  .blow-hint{ font-size:13px; color: var(--muted); margin-top:20px; }
+  .blow-hint{ font-size:12px; color: var(--muted); margin-top:14px; }
   #micBtn{
-    margin-top:10px; padding:9px 18px; border-radius:30px; border:1px solid rgba(111,151,255,.35);
-    background: rgba(111,151,255,.08); color: var(--blue-pale); font-family: var(--sans); font-size:13px;
+    margin-top:8px; padding:8px 16px; border-radius:30px; border:1px solid rgba(111,151,255,.35);
+    background: rgba(111,151,255,.08); color: var(--blue-pale); font-family: var(--sans); font-size:12px;
     cursor:pointer; transition: background .2s;
   }
   #micBtn:hover{ background: rgba(111,151,255,.18); }
   .celebrate-msg{
-    margin-top: 22px; font-family: var(--serif); font-size: 20px; color: var(--gold);
+    margin-top: 16px; font-family: var(--serif); font-size: 18px; color: var(--gold);
     opacity:0; transform: translateY(8px); transition: opacity .6s, transform .6s;
   }
   .celebrate-msg.show{ opacity:1; transform: translateY(0); }
@@ -201,10 +206,13 @@
   .carta-page{ display:flex; flex-direction:column; align-items:center; }
   .carta-label{
     font-family: var(--script); font-style:italic; color: var(--blue-pale);
-    font-size:16px; margin-bottom: 22px; letter-spacing:.03em;
+    font-size:15px; margin-bottom: 12px; letter-spacing:.03em;
   }
   .card{
-    width: min(380px, 88vw); height: 460px;
+    width: min(380px, 88vw); 
+    height: 60vh;
+    min-height: 380px;
+    max-height: 520px;
     perspective: 1400px; cursor:pointer;
   }
   .card-inner{
@@ -217,8 +225,7 @@
     position:absolute; inset:0; backface-visibility:hidden;
     border-radius: var(--radius);
     border: 1px solid rgba(111,151,255,.22);
-    box-shadow: 0 20px 60px rgba(0,0,0,.55);
-    padding: 28px;
+    box-shadow: 0 15px 45px rgba(0,0,0,.55);
     display:flex; flex-direction:column;
     overflow:hidden;
   }
@@ -238,13 +245,13 @@
   }
   .card-front-overlay{
     position:relative; z-index:2;
-    padding: 26px 24px 24px;
-    display:flex; flex-direction:column; align-items:center; gap:8px;
-    background: linear-gradient(to top, rgba(4,6,12,.92) 20%, rgba(4,6,12,.55) 60%, transparent 100%);
+    padding: 20px 18px 18px;
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    background: linear-gradient(to top, rgba(4,6,12,.95) 20%, rgba(4,6,12,.6) 60%, transparent 100%);
   }
-  .card-front .ano{ font-family: var(--serif); font-size: 26px; color: var(--ink); }
-  .card-front .toque{ font-size:12.5px; color: var(--muted); letter-spacing:.08em; text-transform:uppercase; }
-  .card-front .de{ font-family: var(--script); font-style:italic; font-size:17px; color: var(--blue-pale); }
+  .card-front .ano{ font-family: var(--serif); font-size: 22px; color: var(--ink); }
+  .card-front .toque{ font-size:11px; color: var(--muted); letter-spacing:.08em; text-transform:uppercase; }
+  .card-front .de{ font-family: var(--script); font-style:italic; font-size:16px; color: var(--blue-pale); }
 
   .card-back{
     background: linear-gradient(165deg, #101c3a, #070c18);
@@ -253,33 +260,33 @@
   }
   .card-back-inner{
     width:100%; height:100%;
-    padding: 28px;
+    padding: 22px 18px;
     overflow-y:auto;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
     display:flex; flex-direction:column; align-items:stretch;
-    gap: 14px;
+    gap: 12px;
   }
   .card-back .texto{
-    font-family: var(--script); font-size:18px; line-height:1.55; color: var(--ink);
+    font-family: var(--script); font-size:17px; line-height:1.5; color: var(--ink);
     white-space:pre-line; flex:none;
   }
   .card-back .assinatura{
-    font-family: var(--serif); font-size:16px; color: var(--blue-pale); text-align:right; padding-top:6px;
+    font-family: var(--serif); font-size:15px; color: var(--blue-pale); text-align:right; padding-top:4px;
   }
   .card-back .fechar{
-    align-self:center; font-size:11.5px; color: var(--muted); letter-spacing:.08em; text-transform:uppercase;
+    align-self:center; font-size:11px; color: var(--muted); letter-spacing:.08em; text-transform:uppercase;
     margin-top:4px;
   }
 
   /* scrollbar discreta dentro da carta */
-  .card-back-inner::-webkit-scrollbar{ width:5px; }
+  .card-back-inner::-webkit-scrollbar{ width:4px; }
   .card-back-inner::-webkit-scrollbar-thumb{ background: rgba(111,151,255,.3); border-radius:4px; }
 
   @media (max-width: 480px){
-    .card{ height: 74vh; }
-    .cover-photo{ width:130px; height:130px; }
-    .cover h1{ font-size: 30px; }
+    .cover-photo{ width:110px; height:110px; }
+    .cover h1{ font-size: 26px; }
+    .cover p.msg{ font-size: 17px; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -309,11 +316,6 @@
 <script>
 /* =========================================================================
    👋 EDITE SÓ AQUI EMBAIXO PARA PERSONALIZAR O SITE
-   - Troque os nomes, textos e caminhos das fotos.
-   - As fotos ficam na pasta /fotos ao lado deste arquivo index.html.
-     Ex: fotos/capa.jpg, fotos/ano1.jpg, fotos/ano2.jpg ...
-   - Se uma foto não existir, aparece um quadro de espaço reservado —
-     o site não quebra.
    ========================================================================= */
 
 const dados = {
@@ -322,8 +324,6 @@ const dados = {
     foto: "fotos/sasa.jpeg",
     mensagem: "Sasa, uma pessoa maravilhosa, de coração bom, as vezes brava kkkkk, mas incrível, uma ótima pessoa, amiga e filha. Nossa palmeirense roxaaaa, te amamos muito. Que vc se sinta sempre amada e Que sua nova fase seja linda igual o seu coração ♥️"
   },
-  // Uma carta para cada ano de vida dela: Ano 1 até Ano 17.
-  // A página 18 (hoje) é a capa acima — 18 páginas ao todo.
   cartas: [
     { de: "Sua Mãe", foto: "fotos/mamae.jpeg",  texto: `Minha filha cada dia que passa vc me enche de orgulho o maior presente que a vida mim deu tem  o seu sorriso sua felicidade e a minha.metade de mim e você e a outra também te amo feliz aniversário` },
     { de: "Seu Pai", foto: "fotos/papis.jpeg",  texto: `Feliz aniversário, minha filha! Parece que foi ontem que segurei você nos braços pela primeira vez. Hoje, meu coração se enche de orgulho ao ver a mulher incrível que você se tornou. Que a vida continue te presenteando com muita saúde, amor e realizações. Estarei sempre aqui para segurar sua mão. Eu te amo infinitamente!"` },
@@ -333,9 +333,7 @@ Não só em momentos bons, mas na angústia, tristeza, leveza e até nos momento
 Obrigada por ser tão assim como vc é, acho engraçado como vc torce pra mim ficar com uma pessoa específica 🙄🙄, mesmo sabendo que nunca vai dar certo, obrigada por deixar e compartilhar todos os momentos comigo. 
 Que os seus 18 anos sejam cercado de coisas boas e momentos com pessoas que te fazem bem, que no momento de dúvidas vc saiba para onde ir. Eu te amo Sasa!! E estarei aqui sempre para tudo que você precisar.` },
     { de: "Guga", foto: "fotos/guga.jpeg",  texto: `Hoje é um dia muito especial para minha prima do coração, Sabrina eu sei que a gente briga e eu não dou muita atenção a você, mais fique sabendo que vc estará sempre no meu coração, amo muito você por que quando você vem aqui, a gente resenha bastante, queria dar um feliz aniversário pra você, que Deus abençoe você e todos q estão ao seu lado, muita saúde e paz pra vc e a todos nois, AMO VOCÊ 🫶🏻`},
-    { de: "Theozinho", foto: "fotos/theo.jpeg",  texto: `
-Parabéns, prima! Eu gosto muito de você. Espero que seu dia seja muito feliz e cheio de presentes, bolo e alegria. Que Deus cuide de você sempre. Te amo! 
-` },
+    { de: "Theozinho", foto: "fotos/theo.jpeg",  texto: `Parabéns, prima! Eu gosto muito de você. Espero que seu dia seja muito feliz e cheio de presentes, bolo e alegria. Que Deus cuide de você sempre. Te amo!` },
     { de: "Sua Best Master Pietra", foto: "fotos/pipis.jpeg",  texto: `Sasa, meu minha amg, minha companheira, minna topa tudo, minha irmã de outra mãe que a vida me deu 
 Eu sou grata por sua vida, por ter te conhecido e por tudo, nossos momentos, nossas risadas, saídas, fugas das aulas kkkkk (só achando uma desculpa para passear) obrigada por TUDO eu te amo absurdamente 
 Espero que seu novo ano seja repleto de muita alegria, paz, saúde e coisas maravilhosas, que essa nova fase seja incrível e inesquecível com muita diversão e aprendizado 
@@ -377,14 +375,14 @@ Prof Caio` },
 É uma honra tê-la como aluna`},
     { de: "Leleo", foto: "fotos/leo.jpeg", texto: `Oi pequena princesa, quero te desejar um feliz aniversário, espero que desse dia em diante Deus te abençoe cada vez mais, desejo tmb tudo de bom e do melhor pra vc, vc estará sempre no meu coração, gosto muito de vc, vc é uma pessoa incrível, quero te ver sempre bem, estarei sempre com vc pequena, obg por confiar em mim sempre, obg por me considerar alguém digno da sua confiança, essa mensagem n é muito grande mas é do fundo do meu coração, parabéns pequena princesa, tenha um ótimo dia ❤️` },
     { de: "Tia Taty", foto: "fotos/titiataty.jpeg", texto: `Sabrina, que seu aniversário tenha sido especial ( com a simples surpresa que fizemos a você). Parabéns, muitas felicidades, que Jesus esteja com vc nesse novo ciclo e que vc possa viver o melhor Dele no seu novo ano. 🥳🥳🥳🥳 Amamos vc. ❤️❤️❤️`},
-    { de: "Nome de quem escreve", foto: "fotos/padrinhos.jpeg", texto: `Oi Sa passando aqui pra te desejar um feliz aniversário,que seja cheio de saúde, paz, sucesso e muito amor 
+    { de: "Padrinhos", foto: "fotos/padrinhos.jpeg", texto: `Oi Sa passing aqui pra te desejar um feliz aniversário,que seja cheio de saúde, paz, sucesso e muito amor 
 Que nosso grandioso Deus te cubra com muita luz e benção. Feliz vida nós te amamos 😘😘😘`}
   ]
 };
 
-/* ========================= NÃO PRECISA MEXER DAQUI PRA BAIXO ========================= */
+/* ========================= SISTEMA ========================= */
 
-const totalPages = 1 + dados.cartas.length; // capa + cartas
+const totalPages = 1 + dados.cartas.length;
 let current = 0;
 const stage = document.getElementById('stage');
 const counterEl = document.getElementById('counter');
@@ -456,6 +454,7 @@ function render(){
   progressFill.style.width = `${((current+1)/totalPages)*100}%`;
   prevBtn.disabled = current === 0;
   nextBtn.disabled = current === totalPages - 1;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function go(delta){
@@ -472,17 +471,7 @@ document.addEventListener('keydown', (e) => {
   if(e.key === 'ArrowLeft') go(-1);
 });
 
-// swipe simples pra celular
-let touchX = null;
-document.addEventListener('touchstart', e => touchX = e.touches[0].clientX, {passive:true});
-document.addEventListener('touchend', e => {
-  if(touchX === null) return;
-  const diff = e.changedTouches[0].clientX - touchX;
-  if(Math.abs(diff) > 50) go(diff < 0 ? 1 : -1);
-  touchX = null;
-});
-
-/* ---------- Velinhas ---------- */
+/* Velinhas */
 function setupCake(){
   const wrap = document.getElementById('candles');
   const total = 5;
@@ -551,7 +540,7 @@ async function tryMic(){
   }
 }
 
-/* ---------- Confete simples ---------- */
+/* Confetes */
 function confetti(){
   const colors = ['#6f97ff','#2f5fdc','#e7c98c','#eef2fb'];
   for(let i=0;i<60;i++){
@@ -572,7 +561,7 @@ function confetti(){
   }
 }
 
-/* ---------- Céu estrelado de fundo ---------- */
+/* Estrelas */
 const canvas = document.getElementById('stars');
 const ctx2d = canvas.getContext('2d');
 let stars = [];
